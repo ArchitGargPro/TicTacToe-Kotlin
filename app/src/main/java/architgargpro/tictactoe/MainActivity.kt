@@ -16,6 +16,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 
+    private var player1 = ArrayList<Int>()
+    private var player2 = ArrayList<Int>()
+
+    private var activePlayer = 1
+    private var winner = 0 //1 for win 0 for no winner
+    private var numberOfPlayers = 1
+
+
     fun click(view: View)
     {
         val selectedButton = view as Button
@@ -33,16 +41,61 @@ class MainActivity : AppCompatActivity() {
             R.id.button9 -> cellID = 9
         }
 
-//        Toast.makeText(this, "Button Clicked : " + cellID , Toast.LENGTH_SHORT).show()
-
         play(cellID, selectedButton)
     }
 
-    var player1 = ArrayList<Int>()
-    var player2 = ArrayList<Int>()
+    fun reset(view: View)
+    {
+        frameLayout.visibility = View.VISIBLE
+        reset.visibility = View.INVISIBLE
+        tableLayout.visibility = View.INVISIBLE
 
-    var activePlayer = 1
-    var winner = 0 //1 for win 0 for no winner
+        //enabling all buttons also to end the game
+        for (i in 1..9)
+        {
+            val selectedButton: Button
+            when (i)
+            {
+                    1 -> selectedButton = button1
+                    2 -> selectedButton = button2
+                    3 -> selectedButton = button3
+                    4 -> selectedButton = button4
+                    5 -> selectedButton = button5
+                    6 -> selectedButton = button6
+                    7 -> selectedButton = button7
+                    8 -> selectedButton = button8
+                    9 -> selectedButton = button9
+                    else -> selectedButton = button1
+            }
+            selectedButton.isEnabled = true
+            selectedButton.text = ""
+
+        }
+
+        //reset player 1 and 2 arrays, active player and winner
+        activePlayer = 1
+        winner = 0
+        player1.clear()
+        player2.clear()
+    }
+
+    fun setNumberOfPlayers(view: View)
+    {
+        val selectedButton = view as Button
+
+        if(selectedButton.id==R.id.set1)
+        {
+            numberOfPlayers = 1
+        }
+        else if(selectedButton.id==R.id.set2)
+        {
+            numberOfPlayers = 2
+        }
+
+        frameLayout.visibility = View.INVISIBLE
+        reset.visibility = View.VISIBLE
+        tableLayout.visibility = View.VISIBLE
+    }
 
     private fun play(cellID: Int, selectedButton: Button)
     {
@@ -55,10 +108,8 @@ class MainActivity : AppCompatActivity() {
 
             checkWin()
 
-
-
             // play the automated turn after a small pause
-            if(winner==0) {
+            if(winner == 0 && numberOfPlayers == 1) {
 
                 autoPlay()
             }

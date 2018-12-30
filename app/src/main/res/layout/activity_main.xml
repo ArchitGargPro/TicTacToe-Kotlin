@@ -5,16 +5,49 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity"
-        android:background="@color/colorPrimaryDark">
+        android:background="@color/colorPrimaryDark"
+        tools:layout_editor_absoluteY="81dp">
+
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:foregroundGravity="center"
+            android:id="@+id/frameLayout"
+            android:background="@android:color/holo_orange_dark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+                android:text="@string/p1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="setNumberOfPlayers"
+                android:id="@+id/set1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="188dp"
+                app:layout_constraintBottom_toTopOf="@+id/set2"/>
+        <Button
+                android:text="@string/p2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="setNumberOfPlayers"
+                android:id="@+id/set2"
+                app:layout_constraintStart_toStartOf="@+id/set1"
+                app:layout_constraintTop_toBottomOf="@+id/set1"/>
+    </android.support.constraint.ConstraintLayout>
 
     <TableLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:gravity="center"
             android:id="@+id/tableLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="invisible" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
 
         <TableRow
@@ -132,4 +165,15 @@
                     android:buttonStyle="@style/Widget.AppCompat.Button.Borderless"/>
         </TableRow>
     </TableLayout>
+    <Button
+            android:text="@string/reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/reset"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp"
+            android:onClick="reset"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="invisible"/>
 </android.support.constraint.ConstraintLayout>
