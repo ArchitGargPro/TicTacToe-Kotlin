@@ -3,4 +3,5 @@
     <string name="p1">1 Player</string>
     <string name="p2">2 Player</string>
     <string name="reset">RESET</string>
+    <string name="newGame">New Game</string>
 </resources>

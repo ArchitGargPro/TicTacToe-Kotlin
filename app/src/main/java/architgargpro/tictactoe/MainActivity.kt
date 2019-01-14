@@ -3,9 +3,10 @@ package architgargpro.tictactoe
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.Toast
+import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -22,6 +23,8 @@ class MainActivity : AppCompatActivity() {
     private var activePlayer = 1
     private var winner = 0 //1 for win 0 for no winner
     private var numberOfPlayers = 1
+    private var p1score = 0
+    private var p2score = 0
 
 
     fun click(view: View)
@@ -44,11 +47,24 @@ class MainActivity : AppCompatActivity() {
         play(cellID, selectedButton)
     }
 
-    fun reset(view: View)
-    {
+    override fun onBackPressed() {
         frameLayout.visibility = View.VISIBLE
         reset.visibility = View.INVISIBLE
         tableLayout.visibility = View.INVISIBLE
+        gameLayout.visibility = View.INVISIBLE
+        p1score = 0
+        p2score = 0
+        setScore()
+    }
+
+    fun reset(view: View)
+    {
+//        frameLayout.visibility = View.VISIBLE
+//        reset.visibility = View.INVISIBLE
+//        tableLayout.visibility = View.INVISIBLE
+
+        val winnerText: TextView = winnerText
+        winnerText.text = ""
 
         //enabling all buttons also to end the game
         for (i in 1..9)
@@ -93,12 +109,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         frameLayout.visibility = View.INVISIBLE
+//        p1_score = 0
+//        p2_score = 0
+        gameLayout.visibility = View.VISIBLE
         reset.visibility = View.VISIBLE
         tableLayout.visibility = View.VISIBLE
+        reset(view)
     }
 
     private fun play(cellID: Int, selectedButton: Button)
     {
+        val resetButton: Button = reset
+        resetButton.text = getString(R.string.reset)
+
         if(activePlayer == 1)
         {
             selectedButton.text = "O"
@@ -124,6 +147,26 @@ class MainActivity : AppCompatActivity() {
 
         selectedButton.isEnabled = false
         checkWin()
+
+        if(winner==1)
+        {
+            p1score += 1
+        }
+        else if (winner==2)
+        {
+            p2score += 1
+        }
+
+        setScore()
+    }
+
+    private fun setScore()
+    {
+        val p1_scr: TextView = player1_score
+        p1_scr.text = p1score.toString()
+
+        val p2_scr: TextView = player2_score
+        p2_scr.text = p2score.toString()
     }
 
     private fun checkWin()
@@ -138,6 +181,9 @@ class MainActivity : AppCompatActivity() {
             (player1.contains(3) && player1.contains(5) && player1.contains(7)))
         {
             winner = 1
+//            p1_score+=1
+            Log.i("here",player1.toString())
+            Log.i("here",player2.toString())
         }
         else
             if((player2.contains(1) && player2.contains(2) && player2.contains(3)) ||
@@ -150,11 +196,16 @@ class MainActivity : AppCompatActivity() {
                     (player2.contains(3) && player2.contains(5) && player2.contains(7)))
         {
             winner = 2
+//            p2_score+=1
+            Log.i("here",player1.toString())
+            Log.i("here",player2.toString())
         }
 
         if(winner!=0) {
-            Toast.makeText(this, "Player " + winner.toString() + " Won", Toast.LENGTH_LONG).show()
+//            Toast.makeText(this, "Player " + winner.toString() + " Won", Toast.LENGTH_LONG).show()
 
+            val winnerText: TextView = winnerText
+            winnerText.text = "Player " + winner.toString() + " Won"
 
             //disabling other buttons also to end the game
             for (i in 1..9)
@@ -178,6 +229,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+            val resetButton: Button = reset
+            resetButton.text = getString(R.string.newGame)
         }
     }
 
