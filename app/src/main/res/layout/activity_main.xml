@@ -175,7 +175,7 @@
                 app:layout_constraintStart_toEndOf="@+id/player1_head"
                 app:layout_constraintEnd_toStartOf="@+id/player2_head"/>
         <TextView
-                android:text="Player 1 (O)"
+                android:text="@string/player1"
                 android:layout_width="wrap_content"
                 android:textColor="#ffffff"
                 android:layout_height="wrap_content" android:id="@+id/player1_head"
@@ -184,7 +184,7 @@
                 app:layout_constraintHorizontal_chainStyle="spread_inside" app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="45dp" app:layout_constraintEnd_toStartOf="@+id/reset"/>
         <TextView
-                android:text="Player 2 (X)"
+                android:text="@string/player2"
                 android:layout_width="wrap_content"
                 android:textColor="#ffffff"
                 android:layout_height="wrap_content" android:id="@+id/player2_head"

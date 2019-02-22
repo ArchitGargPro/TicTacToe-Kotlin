@@ -25,13 +25,14 @@ class MainActivity : AppCompatActivity() {
     private var numberOfPlayers = 1
     private var p1score = 0
     private var p2score = 0
+    private var autoPlayActive = false
 
 
     fun click(view: View)
     {
         val selectedButton = view as Button
         var cellID = 0
-        when(selectedButton.id)          //this is like switch case
+        when(selectedButton.id)
         {
             R.id.button1 -> cellID = 1
             R.id.button2 -> cellID = 2
@@ -59,10 +60,6 @@ class MainActivity : AppCompatActivity() {
 
     fun reset(view: View)
     {
-//        frameLayout.visibility = View.VISIBLE
-//        reset.visibility = View.INVISIBLE
-//        tableLayout.visibility = View.INVISIBLE
-
         val winnerText: TextView = winnerText
         winnerText.text = ""
 
@@ -109,8 +106,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         frameLayout.visibility = View.INVISIBLE
-//        p1_score = 0
-//        p2_score = 0
         gameLayout.visibility = View.VISIBLE
         reset.visibility = View.VISIBLE
         tableLayout.visibility = View.VISIBLE
@@ -131,10 +126,10 @@ class MainActivity : AppCompatActivity() {
 
             checkWin()
 
-            // play the automated turn after a small pause
+            // play the automated turn
             if(winner == 0 && numberOfPlayers == 1) {
-
                 autoPlay()
+                autoPlayActive = false
             }
         }
         else
@@ -148,25 +143,23 @@ class MainActivity : AppCompatActivity() {
         selectedButton.isEnabled = false
         checkWin()
 
-        if(winner==1)
-        {
-            p1score += 1
+        if (autoPlayActive == false) {
+            if (winner == 1) {
+                p1score += 1
+            } else if (winner == 2) {
+                p2score += 1
+            }
         }
-        else if (winner==2)
-        {
-            p2score += 1
-        }
-
         setScore()
     }
 
     private fun setScore()
     {
-        val p1_scr: TextView = player1_score
-        p1_scr.text = p1score.toString()
+        val p1scr: TextView = player1_score
+        p1scr.text = p1score.toString()
 
-        val p2_scr: TextView = player2_score
-        p2_scr.text = p2score.toString()
+        val p2scr: TextView = player2_score
+        p2scr.text = p2score.toString()
     }
 
     private fun checkWin()
@@ -205,7 +198,8 @@ class MainActivity : AppCompatActivity() {
 //            Toast.makeText(this, "Player " + winner.toString() + " Won", Toast.LENGTH_LONG).show()
 
             val winnerText: TextView = winnerText
-            winnerText.text = "Player " + winner.toString() + " Won"
+            val str = "Player " + winner.toString() + " Won"
+            winnerText.text = str
 
             //disabling other buttons also to end the game
             for (i in 1..9)
@@ -236,6 +230,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun autoPlay()
     {
+        autoPlayActive = true
         val emptyCells = ArrayList<Int>()
         for (i in 1..9)
         {
